@@ -19,67 +19,27 @@
             50% { background-position: 100% 50%; }
             100% { background-position: 0% 50%; }
         }
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-            text-align: center;
-        }
+        .container { max-width: 800px; margin: 0 auto; padding: 20px; text-align: center; }
         .photo-placeholder {
-            width: 320px;
-            height: 320px;
-            background-color: #fce7f3;
-            margin: 30px auto;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 50%;
-            border: 5px solid #fff;
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
-            transition: transform 0.3s ease;
+            width: 320px; height: 320px; background-color: #fce7f3; margin: 30px auto;
+            display: flex; align-items: center; justify-content: center; border-radius: 50%;
+            border: 5px solid #fff; box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); transition: transform 0.3s ease;
         }
-        .photo-placeholder:hover {
-            transform: scale(1.05);
-        }
+        .photo-placeholder:hover { transform: scale(1.05); }
         .countdown {
-            font-size: 1.5rem;
-            margin: 15px 0;
-            color: #fff;
-            background-color: rgba(74, 4, 78, 0.7);
-            padding: 10px;
-            border-radius: 10px;
-            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+            font-size: 1.5rem; margin: 15px 0; color: #fff; background-color: rgba(74, 4, 78, 0.7);
+            padding: 10px; border-radius: 10px; box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
         }
         .button {
-            background-color: #ec4899;
-            color: white;
-            padding: 10px 20px;
-            border-radius: 20px;
-            text-decoration: none;
-            font-weight: bold;
-            display: inline-block;
-            margin-top: 10px;
+            background-color: #ec4899; color: white; padding: 10px 20px; border-radius: 20px;
+            text-decoration: none; font-weight: bold; display: inline-block; margin-top: 10px;
             transition: background-color 0.3s ease;
         }
-        .button:hover {
-            background-color: #db2777;
-        }
-        .title {
-            font-size: 3rem;
-            font-weight: 700;
-            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
-            margin-bottom: 15px;
-        }
-        .info {
-            font-size: 1.3rem;
-            margin: 8px 0;
-        }
+        .button:hover { background-color: #db2777; }
+        .title { font-size: 3rem; font-weight: 700; text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2); margin-bottom: 15px; }
+        .info { font-size: 1.3rem; margin: 8px 0; }
         .heart {
-            position: fixed;
-            bottom: -20px;
-            font-size: 24px;
-            animation: floatUp 6s linear infinite;
-            color: #ff4d6d;
+            position: fixed; bottom: -20px; font-size: 24px; animation: floatUp 6s linear infinite; color: #ff4d6d;
         }
         @keyframes floatUp {
             0% { transform: translateY(0) scale(1); opacity: 1; }
@@ -88,12 +48,6 @@
     </style>
 </head>
 <body>
-    <!-- Музыка -->
-    <audio id="bg-music" autoplay loop muted>
-        <source src="happy_birthday.mp3" type="audio/mpeg">
-        Ваш браузер не поддерживает аудио.
-    </audio>
-
     <div class="container">
         <h1 class="title">Приглашаем на День Рождения!</h1>
         <div class="photo-placeholder">
@@ -107,8 +61,26 @@
         <div class="countdown" id="countdown">Обратный отсчет...</div>
     </div>
 
+    <!-- 🎵 Скрипт запуска музыки -->
     <script>
-        // Запуск обратного отсчета
+        let musicStarted = false;
+        const audio = new Audio("happy_birthday.mp3");
+        audio.loop = true;
+
+        function startMusic() {
+            if (!musicStarted) {
+                audio.play().catch(err => console.log("Ошибка запуска музыки:", err));
+                musicStarted = true;
+            }
+        }
+
+        // Первый клик по экрану включает музыку
+        document.body.addEventListener("click", startMusic, { once: true });
+    </script>
+
+
+    <!-- ⏳ Обратный отсчет -->
+    <script>
         function updateCountdown() {
             const eventDate = new Date('2025-09-21T19:00:00+05:00');
             const now = new Date();
@@ -124,24 +96,23 @@
             const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
             const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
 
-            document.getElementById('countdown').innerText = 
+            document.getElementById('countdown').innerText =
                 `${days} дн., ${hours} ч., ${minutes} мин., ${seconds} сек. до праздника!`;
         }
         setInterval(updateCountdown, 1000);
         updateCountdown();
     </script>
 
-    <!-- Конфетти -->
+    <!-- 🎉 Конфетти -->
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js"></script>
     <script>
         function bigConfetti() {
-            const duration = 3 * 1000; 
+            const duration = 3 * 1000;
             const animationEnd = Date.now() + duration;
 
             (function frame() {
                 confetti({ particleCount: 20, angle: 60, spread: 70, origin: { x: 0 } });
                 confetti({ particleCount: 20, angle: 120, spread: 70, origin: { x: 1 } });
-
                 confetti({
                     particleCount: 15,
                     spread: 360,
@@ -154,22 +125,11 @@
                 }
             }());
         }
-
-        window.onload = () => {
-            bigConfetti();
-
-            // Размьютим и запустим музыку
-            const audio = document.getElementById("bg-music");
-            audio.muted = false;
-            audio.play().catch(err => {
-                console.log("Автовоспроизведение заблокировано:", err);
-            });
-        };
-
+        window.onload = () => { bigConfetti(); };
         setInterval(bigConfetti, 30000);
     </script>
 
-    <!-- Летающие сердечки -->
+    <!-- ❤️ Летающие сердечки -->
     <script>
         function createHeart() {
             const heart = document.createElement("div");
@@ -177,11 +137,9 @@
             heart.innerHTML = "❤️";
             heart.style.left = Math.random() * window.innerWidth + "px";
             document.body.appendChild(heart);
-
             setTimeout(() => heart.remove(), 6000);
         }
         setInterval(createHeart, 1000);
     </script>
 </body>
 </html>
-<!-- Sunkar -->
