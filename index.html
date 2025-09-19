@@ -88,17 +88,12 @@
     </style>
 </head>
 <body>
-    <audio id="bg-music" loop>
-        <source src="music.mp3" type="audio/mpeg">
+    <!-- Музыка -->
+    <audio id="bg-music" autoplay loop muted>
+        <source src="happy_birthday.mp3" type="audio/mpeg">
         Ваш браузер не поддерживает аудио.
     </audio>
 
-
-    <button onclick="playMusic()" class="px-4 py-2 bg-pink-500 text-white rounded-lg shadow-lg mt-5">
-    ▶️ Включить музыку
-    </button>
-
-    
     <div class="container">
         <h1 class="title">Приглашаем на День Рождения!</h1>
         <div class="photo-placeholder">
@@ -113,6 +108,7 @@
     </div>
 
     <script>
+        // Запуск обратного отсчета
         function updateCountdown() {
             const eventDate = new Date('2025-09-21T19:00:00+05:00');
             const now = new Date();
@@ -131,7 +127,6 @@
             document.getElementById('countdown').innerText = 
                 `${days} дн., ${hours} ч., ${minutes} мин., ${seconds} сек. до праздника!`;
         }
-
         setInterval(updateCountdown, 1000);
         updateCountdown();
     </script>
@@ -139,44 +134,40 @@
     <!-- Конфетти -->
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js"></script>
     <script>
-    function bigConfetti() {
-        const duration = 3 * 1000; // 🔥 3 секунды вместо 5
-        const animationEnd = Date.now() + duration;
+        function bigConfetti() {
+            const duration = 3 * 1000; 
+            const animationEnd = Date.now() + duration;
 
-        (function frame() {
-            // Сильные потоки с двух сторон
-            confetti({ particleCount: 20, angle: 60, spread: 70, origin: { x: 0 } });
-            confetti({ particleCount: 20, angle: 120, spread: 70, origin: { x: 1 } });
+            (function frame() {
+                confetti({ particleCount: 20, angle: 60, spread: 70, origin: { x: 0 } });
+                confetti({ particleCount: 20, angle: 120, spread: 70, origin: { x: 1 } });
 
-            // Дополнительные взрывы сверху
-            confetti({
-                particleCount: 15,
-                spread: 360,
-                startVelocity: 50,
-                origin: { x: Math.random(), y: Math.random() - 0.2 }
-            });
+                confetti({
+                    particleCount: 15,
+                    spread: 360,
+                    startVelocity: 50,
+                    origin: { x: Math.random(), y: Math.random() - 0.2 }
+                });
 
-            if (Date.now() < animationEnd) {
-                requestAnimationFrame(frame);
-            }
-        }());
+                if (Date.now() < animationEnd) {
+                    requestAnimationFrame(frame);
+                }
+            }());
         }
 
-        // Запускаем салют при загрузке
         window.onload = () => {
             bigConfetti();
+
+            // Размьютим и запустим музыку
+            const audio = document.getElementById("bg-music");
+            audio.muted = false;
+            audio.play().catch(err => {
+                console.log("Автовоспроизведение заблокировано:", err);
+            });
         };
 
-        // Повтор каждые 30 секунд
         setInterval(bigConfetti, 30000);
     </script>
-
-    <script>
-        function playMusic() {
-            document.getElementById("bg-music").play();
-        }
-    </script>
-
 
     <!-- Летающие сердечки -->
     <script>
@@ -191,7 +182,6 @@
         }
         setInterval(createHeart, 1000);
     </script>
-
 </body>
 </html>
 <!-- Sunkar -->
