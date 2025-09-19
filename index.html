@@ -88,6 +88,10 @@
     </style>
 </head>
 <body>
+    <audio autoplay loop>
+        <source src="happy_birthday.mp3" type="audio/mpeg">
+        Ваш браузер не поддерживает воспроизведение аудио.
+    </audio>
     <div class="container">
         <h1 class="title">Приглашаем на День Рождения!</h1>
         <div class="photo-placeholder">
@@ -128,27 +132,27 @@
     <!-- Конфетти -->
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js"></script>
     <script>
-        function bigConfetti() {
-            const duration = 5 * 1000; // 5 секунд
-            const animationEnd = Date.now() + duration;
+    function bigConfetti() {
+        const duration = 3 * 1000; // 🔥 3 секунды вместо 5
+        const animationEnd = Date.now() + duration;
 
-            (function frame() {
-                // Сильные потоки с двух сторон
-                confetti({ particleCount: 20, angle: 60, spread: 70, origin: { x: 0 } });
-                confetti({ particleCount: 20, angle: 120, spread: 70, origin: { x: 1 } });
+        (function frame() {
+            // Сильные потоки с двух сторон
+            confetti({ particleCount: 20, angle: 60, spread: 70, origin: { x: 0 } });
+            confetti({ particleCount: 20, angle: 120, spread: 70, origin: { x: 1 } });
 
-                // Дополнительные взрывы сверху
-                confetti({
-                    particleCount: 15,
-                    spread: 360,
-                    startVelocity: 50,
-                    origin: { x: Math.random(), y: Math.random() - 0.2 }
-                });
+            // Дополнительные взрывы сверху
+            confetti({
+                particleCount: 15,
+                spread: 360,
+                startVelocity: 50,
+                origin: { x: Math.random(), y: Math.random() - 0.2 }
+            });
 
-                if (Date.now() < animationEnd) {
-                    requestAnimationFrame(frame);
-                }
-            }());
+            if (Date.now() < animationEnd) {
+                requestAnimationFrame(frame);
+            }
+        }());
         }
 
         // Запускаем салют при загрузке
@@ -159,6 +163,7 @@
         // Повтор каждые 30 секунд
         setInterval(bigConfetti, 30000);
     </script>
+
 
     <!-- Летающие сердечки -->
     <script>
