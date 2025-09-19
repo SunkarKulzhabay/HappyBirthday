@@ -8,9 +8,16 @@
     <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&display=swap" rel="stylesheet">
     <style>
         body {
-            background: linear-gradient(to bottom, #f9a8d4, #fef08a);
             font-family: 'Caveat', cursive;
             color: #4a044e;
+            background: linear-gradient(-45deg, #ff9a9e, #fad0c4, #fad0c4, #ffdde1);
+            background-size: 400% 400%;
+            animation: gradient 12s ease infinite;
+        }
+        @keyframes gradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
         .container {
             max-width: 800px;
@@ -67,6 +74,17 @@
             font-size: 1.3rem;
             margin: 8px 0;
         }
+        .heart {
+            position: fixed;
+            bottom: -20px;
+            font-size: 24px;
+            animation: floatUp 6s linear infinite;
+            color: #ff4d6d;
+        }
+        @keyframes floatUp {
+            0% { transform: translateY(0) scale(1); opacity: 1; }
+            100% { transform: translateY(-800px) scale(0.5); opacity: 0; }
+        }
     </style>
 </head>
 <body>
@@ -106,6 +124,56 @@
         setInterval(updateCountdown, 1000);
         updateCountdown();
     </script>
+
+    <!-- Конфетти -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js"></script>
+    <script>
+        function bigConfetti() {
+            const duration = 5 * 1000; // 5 секунд
+            const animationEnd = Date.now() + duration;
+
+            (function frame() {
+                // Сильные потоки с двух сторон
+                confetti({ particleCount: 20, angle: 60, spread: 70, origin: { x: 0 } });
+                confetti({ particleCount: 20, angle: 120, spread: 70, origin: { x: 1 } });
+
+                // Дополнительные взрывы сверху
+                confetti({
+                    particleCount: 15,
+                    spread: 360,
+                    startVelocity: 50,
+                    origin: { x: Math.random(), y: Math.random() - 0.2 }
+                });
+
+                if (Date.now() < animationEnd) {
+                    requestAnimationFrame(frame);
+                }
+            }());
+        }
+
+        // Запускаем салют при загрузке
+        window.onload = () => {
+            bigConfetti();
+        };
+
+        // Повтор каждые 30 секунд
+        setInterval(bigConfetti, 30000);
+    </script>
+
+    <!-- Летающие сердечки -->
+    <script>
+        function createHeart() {
+            const heart = document.createElement("div");
+            heart.classList.add("heart");
+            heart.innerHTML = "❤️";
+            heart.style.left = Math.random() * window.innerWidth + "px";
+            document.body.appendChild(heart);
+
+            setTimeout(() => heart.remove(), 6000);
+        }
+        setInterval(createHeart, 1000);
+    </script>
+
 </body>
 </html>
 <!-- Sunkar -->
