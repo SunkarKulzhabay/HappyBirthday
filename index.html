@@ -88,10 +88,17 @@
     </style>
 </head>
 <body>
-    <audio autoplay loop>
-        <source src="happy_birthday.mp3" type="audio/mpeg">
-        Ваш браузер не поддерживает воспроизведение аудио.
+    <audio id="bg-music" loop>
+        <source src="music.mp3" type="audio/mpeg">
+        Ваш браузер не поддерживает аудио.
     </audio>
+
+
+    <button onclick="playMusic()" class="px-4 py-2 bg-pink-500 text-white rounded-lg shadow-lg mt-5">
+    ▶️ Включить музыку
+    </button>
+
+    
     <div class="container">
         <h1 class="title">Приглашаем на День Рождения!</h1>
         <div class="photo-placeholder">
@@ -162,6 +169,12 @@
 
         // Повтор каждые 30 секунд
         setInterval(bigConfetti, 30000);
+    </script>
+
+    <script>
+        function playMusic() {
+            document.getElementById("bg-music").play();
+        }
     </script>
 
 
